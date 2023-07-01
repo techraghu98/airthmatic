@@ -1,0 +1,109 @@
+class RentalApplication {
+    // Existing code...
+
+    private void displayMainMenu() {
+        System.out.println("------ Main Menu ------");
+        System.out.println("1. Login");
+        System.out.println("2. List Cameras");
+        System.out.println("3. Rent a Camera");
+        System.out.println("4. Add Funds to Wallet");
+        System.out.println("5. View Wallet Amount");
+        System.out.println("6. View My Cameras");
+        System.out.println("7. Go to Previous Menu");
+        System.out.println("8. Exit");
+    }
+
+    private void login() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your username: ");
+        String username = scanner.nextLine();
+
+        // Perform user authentication logic here...
+        // For simplicity, we will assume the user is authenticated successfully.
+
+        currentUser = new User(username);
+        System.out.println("Logged in as " + username);
+    }
+
+    private void addCamera() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter camera brand: ");
+        String brand = scanner.nextLine();
+        System.out.print("Enter camera model: ");
+        String model = scanner.nextLine();
+        System.out.print("Enter per day rental amount: $");
+        double rentalAmount = scanner.nextDouble();
+
+        Camera camera = new Camera(brand, model, rentalAmount);
+        cameraList.add(camera);
+        System.out.println("Camera added successfully!");
+    }
+
+    private void removeCamera() {
+        listCameras();
+        System.out.print("Enter the camera number to remove: ");
+        int cameraIndex = getUserChoice() - 1;
+
+        if (cameraIndex >= 0 && cameraIndex < cameraList.size()) {
+            cameraList.remove(cameraIndex);
+            System.out.println("Camera removed successfully!");
+        } else {
+            System.out.println("Invalid camera selection.");
+        }
+    }
+
+    private void viewMyCameras() {
+        System.out.println("\n------ My Cameras ------");
+        if (cameraList.isEmpty()) {
+            System.out.println("No cameras added.");
+        } else {
+            for (int i = 0; i < cameraList.size(); i++) {
+                Camera camera = cameraList.get(i);
+                System.out.println((i + 1) + ". " + camera.getBrand() + " " + camera.getModel() +
+                        " (Per Day Rental Amount: $" + camera.getPerDayRentalAmount() + ")");
+            }
+        }
+    }
+
+    private void navigateToPreviousMenu() {
+        // Simply return from the current method to go back to the previous menu.
+    }
+
+    public void startApplication() {
+        // Existing code...
+
+        while (true) {
+            displayMainMenu();
+            int choice = getUserChoice();
+
+            switch (choice) {
+                case 1:
+                    login();
+                    break;
+                case 2:
+                    listCameras();
+                    break;
+                case 3:
+                    rentCamera();
+                    break;
+                case 4:
+                    addFundsToWallet();
+                    break;
+                case 5:
+                    viewWalletAmount();
+                    break;
+                case 6:
+                    viewMyCameras();
+                    break;
+                case 7:
+                    navigateToPreviousMenu();
+                    break;
+                case 8:
+                    System.out.println("Exiting the application...");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
